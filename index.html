@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+  <meta name="theme-color" content="#101b17">
+  <meta name="description" content="FORESTFALL: a free-to-play 3D forest combat prototype made with Three.js.">
+  <title>FORESTFALL — Forest Arena</title>
+  <link rel="stylesheet" href="./style.css">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+</head>
+<body>
+  <div id="game"></div>
+  <div id="vignette"></div>
+  <div id="hitflash"></div>
+  <div id="hud" class="hidden">
+    <div class="hud-left">
+      <div class="logo">FOREST<span>FALL</span><small>ALPHA 0.1</small></div>
+      <div class="health-label"><span>HEALTH</span><strong id="health-text">100 / 100</strong></div>
+      <div class="bar"><div id="health-fill"></div></div>
+      <div class="hud-stats">
+        <span class="pill"><span class="coin">✦</span> <b id="coins">0</b> coins</span>
+        <span class="pill">⚔ <b id="kills">0</b> KOs</span>
+      </div>
+    </div>
+    <div class="hud-right">
+      <button id="shop-button" class="hud-btn" aria-label="Open weapon shop">⚒ <span>ARSENAL</span> <kbd>B</kbd></button>
+      <button id="pause-button" class="hud-btn" aria-label="Pause game">Ⅱ <span>PAUSE</span> <kbd>ESC</kbd></button>
+    </div>
+    <div id="crosshair" aria-hidden="true"><i></i><i></i></div>
+    <div id="combat-feedback"></div>
+    <div id="bottom-hud">
+      <div class="weapon-panel">
+        <span class="eyebrow">EQUIPPED WEAPON</span>
+        <div id="weapon-name">IRON SWORD</div>
+        <small id="weapon-description">Balanced blade • 3-hit combo</small>
+      </div>
+      <div class="ability-list">
+        <div class="ability"><kbd>Q</kbd><span>DASH</span><div class="cooldown-overlay" id="dash-cooldown"></div></div>
+        <div class="ability special"><kbd>E</kbd><span id="special-name">WHIRLWIND</span><div class="cooldown-overlay" id="special-cooldown"></div></div>
+        <div class="ability"><kbd>RMB</kbd><span>BLOCK</span></div>
+      </div>
+    </div>
+    <div id="toast" aria-live="polite"></div>
+    <div id="mobile-ui">
+      <div id="move-pad"><div id="move-knob"></div></div>
+      <div id="mobile-buttons">
+        <button data-action="block" class="mobile-ability block">🛡</button>
+        <button data-action="dash" class="mobile-ability dash">DASH</button>
+        <button data-action="special" class="mobile-ability special">SKILL</button>
+        <button data-action="attack" class="mobile-ability attack">ATTACK</button>
+      </div>
+    </div>
+  </div>
+  <div id="overlay">
+    <div id="menu" class="panel">
+      <div class="symbol">✧</div>
+      <div class="overline">THE WILDERNESS AWAITS</div>
+      <h1>FOREST<span>FALL</span></h1>
+      <p>Steel. Skill. Survival.<br>Master your weapon. Rule the forest.</p>
+      <button class="primary" id="play-button">ENTER THE FOREST <span>→</span></button>
+      <div class="menu-tags"><span>3D COMBAT</span><span>WEAPON SKILLS</span><span>SOLO ARENA</span></div>
+      <div class="instructions">WASD move · Mouse look · Click attack · Right click block<br>Q dash · E special · Space jump · B arsenal · Esc pause</div>
+    </div>
+    <div id="pause-menu" class="panel hidden">
+      <div class="overline">TAKE A BREATH</div><h2>PAUSED</h2>
+      <button class="primary" id="resume-button">RESUME <span>→</span></button>
+      <button class="secondary" id="pause-arsenal">ARSENAL</button>
+      <button class="secondary" id="restart-button">RESTART ARENA</button>
+    </div>
+    <div id="shop-menu" class="panel shop-panel hidden">
+      <div class="shop-heading"><div><div class="overline">FORGED FOR SURVIVAL</div><h2>ARSENAL</h2></div><div class="shop-currency">✦ <span id="shop-coins">0</span></div></div>
+      <p class="shop-copy">Defeat forest sentinels to earn coins. Unlock new weapons permanently on this device.</p>
+      <div id="weapon-grid"></div>
+      <button class="secondary shop-close" id="close-shop">BACK TO GAME</button>
+    </div>
+    <div id="death-menu" class="panel hidden">
+      <div class="overline">THE FOREST HAS CLAIMED YOU</div><h2>YOU FELL</h2>
+      <p id="death-stats">Your hunt isn't over.</p>
+      <button class="primary" id="respawn-button">RESPAWN <span>↻</span></button>
+      <button class="secondary" id="death-arsenal">ARSENAL</button>
+    </div>
+  </div>
+  <div id="loading"><div class="loading-logo">FOREST<span>FALL</span></div><div class="loading-line"><div></div></div><small>GROWING THE FOREST...</small></div>
+  <script type="module" src="./game.js"></script>
+</body>
+</html>
