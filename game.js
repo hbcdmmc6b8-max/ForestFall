@@ -1,4 +1,5 @@
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js';
+import { upgradeForest, upgradeFighter, tickOutfits } from './visuals.js';
 
 const $ = (id) => document.getElementById(id);
 const mobile = matchMedia('(pointer: coarse)').matches;
@@ -54,6 +55,7 @@ const rockCount=84,rocks=new THREE.InstancedMesh(rockG,rockM,rockCount);
 for(let i=0;i<rockCount;i++){const a=rand()*6.283,r=11+rand()*78,x=Math.sin(a)*r,z=Math.cos(a)*r,s=.3+rand()*1.2;dummy.position.set(x,groundHeight(x,z)+s*.2,z);dummy.rotation.set(rand()*3,rand()*6,rand());dummy.scale.set(s*1.3,s*.6,s);dummy.updateMatrix();rocks.setMatrixAt(i,dummy.matrix);if(r<48&&s>.9)obstacles.push({x,z,r:s*.76});}scene.add(rocks);
 const shrubCount=250,shrubs=new THREE.InstancedMesh(shrubG,shrubM,shrubCount);
 for(let i=0;i<shrubCount;i++){const a=rand()*6.283,r=7+rand()*85,x=Math.sin(a)*r,z=Math.cos(a)*r,s=.3+rand()*.75;dummy.position.set(x,groundHeight(x,z)+s*.14,z);dummy.rotation.set(0,rand()*6.283,0);dummy.scale.set(s,s*.48,s);dummy.updateMatrix();shrubs.setMatrixAt(i,dummy.matrix);}scene.add(shrubs);
+upgradeForest(scene, floor, trunks, leaves, leaves2, groundHeight, mobile);
 const altar=new THREE.Group();const platform=new THREE.Mesh(new THREE.CylinderGeometry(5.8,6.25,.5,9),mat(0x617569));platform.position.y=-.16;platform.receiveShadow=true;altar.add(platform);
 for(let i=0;i<9;i++){const a=i/9*Math.PI*2;const slab=new THREE.Mesh(new THREE.BoxGeometry(.28,.07,2.1),mat(0x83988a));slab.position.set(Math.sin(a)*3.75,.15,Math.cos(a)*3.75);slab.rotation.y=a;altar.add(slab);}altar.position.set(0,groundHeight(0,0),0);scene.add(altar);
 const landmarks=[[9,8],[-10,7],[8,-12],[-12,-12]];
@@ -82,7 +84,7 @@ function character(color,headColor,enemy=false){
  if(enemy){const m=part(mount,new THREE.BoxGeometry(.14,1.25,.14),mat(0xa8b3ae,.35,.55),0,-.5,.28);m.rotation.x=.2;}
  return {root,figure,rightArm,leftArm,leftLeg,rightLeg,mount};
 }
-const hero=character(0x8cae73,0xe9c7a5);scene.add(hero.root);
+const hero=character(0x8cae73,0xe9c7a5);upgradeFighter(hero,false,0);scene.add(hero.root);
 hero.root.position.set(0,groundHeight(0,0),0);
 let currentWeaponArt=null;
 function buildWeapon(){
@@ -105,7 +107,7 @@ function buildWeapon(){
 const enemies=[];
 const enemyColors=[0xa45d4a,0x8b7187,0x537f78];
 function createEnemy(index){
- const actor=character(enemyColors[index%3],0xc0c8a5,true);scene.add(actor.root);
+ const actor=character(enemyColors[index%3],0xc0c8a5,true);upgradeFighter(actor,true,index);scene.add(actor.root);
  const back=new THREE.Mesh(new THREE.PlaneGeometry(1.18,.12),new THREE.MeshBasicMaterial({color:0x1c2a22,side:THREE.DoubleSide}));
  const fill=new THREE.Mesh(new THREE.PlaneGeometry(1.16,.09),new THREE.MeshBasicMaterial({color:0xf48d68,side:THREE.DoubleSide}));back.add(fill);fill.position.z=.003;
  actor.root.add(back);back.position.y=3.02;
@@ -343,7 +345,7 @@ function updateEffects(dt){
 const clock=new THREE.Clock();
 function animate(){
  requestAnimationFrame(animate);const dt=Math.min(clock.getDelta(),.045);elapsed+=dt;
- particles.rotation.y=elapsed*.0007;
+ particles.rotation.y=elapsed*.0007;tickOutfits(elapsed);
  if(mode==='playing'){updatePlayer(dt);updateEnemies(dt);updateEffects(dt);}
  if(toastTimer>0){toastTimer-=dt;if(toastTimer<=0)$('toast').classList.remove('show');}
  if(feedbackTimer>0){feedbackTimer-=dt;if(feedbackTimer<=0)$('combat-feedback').style.opacity='0';}
