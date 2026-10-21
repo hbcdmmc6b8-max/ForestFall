@@ -7,8 +7,9 @@ Once GitHub Pages is enabled for this repository, the game lives at:
 
 To enable it: Repository → **Settings** → **Pages** → **Build and deployment** → Source: **GitHub Actions**. The included `.github/workflows/pages.yml` automatically publishes the site on pushes to `main`.
 
-## What's in alpha 0.1?
-- Procedural forest arena with trees, rocks, ruins, sunlight and atmospheric fog
+## What's in alpha 0.2?
+- Visuals alpha 0.2: procedural bark and ground textures, detailed sculpted tree canopies, leaf cards, grass blades, woodland haze, rocky clearings and atmospheric light.
+- Detailed layered character outfits (chest pieces, shoulder panels, belt, hood/hair, boots, and animated cloth).
 - Third-person character movement, sprint, jump and dash
 - Three weapons: starter **Iron Sword**, unlockable **Twin Daggers** and **War Hammer**
 - Three weapon-specific special attacks: Whirlwind, Blade Rush, Earth Shock
@@ -31,8 +32,11 @@ To enable it: Repository → **Settings** → **Pages** → **Build and deployme
 | Arsenal | B or ARSENAL button | ARSENAL button |
 | Pause | Escape | PAUSE button |
 
+## Visual quality and next art milestone
+The first combat blockout used primitive cones, capsules and cylinders. The second art pass in `visuals.js` replaces the tree silhouettes with layered foliage, instanced branches and leaf textures and improves character outfits with additional model geometry and cloth movement. **This is an original stylized procedural environment, not photorealistic or finished professional 3D models.** The next milestone is licensed artist-made GLB assets, proper skeletal animations, an authored forest layout and improved effects. No third-party art is bundled in alpha 0.2.
+
 ## Implementation
-Files: `index.html` (UI), `style.css` (presentation), `game.js` (rendering and gameplay). The game imports a pinned Three.js ES module from jsDelivr, so **an internet connection is required** for the game engine to load.
+Files: `index.html` (UI), `style.css` (presentation), `game.js` (rendering and gameplay), `visuals.js` (procedural art pass). The game imports a pinned Three.js ES module from jsDelivr, so **an internet connection is required** for the game engine to load.
 
 This is a **single-player vertical slice**; multiplayer, online accounts, servers and reliable cross-device save syncing are not implemented. Saves are in localStorage on each device.
 
